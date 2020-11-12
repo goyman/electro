@@ -55,6 +55,10 @@ defmodule Electro.Inventory do
     GenServer.call(@name, {:save_part, part})
   end
 
+  def move_part(part, new_category_id) do
+    GenServer.call(@name, {:move_part, part, new_category_id})
+  end
+
   def create_category(parent, name) do
     GenServer.call(@name, {:create_category, parent, name})
   end
@@ -198,10 +202,14 @@ defmodule Electro.Inventory do
               0
 
             str ->
-              String.contains?(
-                String.downcase(part.mpn),
-                String.downcase(query)
-              )
+              if String.contains?(
+                   String.downcase(part.mpn),
+                   String.downcase(query)
+                 ) do
+                1
+              else
+                0
+              end
           end +
           if query == to_string(part.id) do
             100
@@ -231,6 +239,44 @@ defmodule Electro.Inventory do
   def handle_call({:save_part, part}, _from, inventory) do
     {:ok, inventory, part} = do_save_part(inventory, part)
     {:reply, {:ok, part}, inventory}
+  end
+
+  @impl true
+  def handle_call({:move_part, part, new_category_id}, _from, inventory) do
+    {:ok, inventory, part} = do_move_part(inventory, part, new_category_id)
+    {:reply, {:ok, part}, inventory}
+  end
+
+  def do_move_part(inventory, part, new_category_id) do
+    old_cat = Map.get(inventory.category_index, part.category_id)
+    new_cat = Map.get(inventory.category_index, new_category_id)
+
+    old_dir_path = Path.join(old_cat.path, escape_path(part.name))
+    new_dir_path = Path.join(new_cat.path, escape_path(part.name))
+
+    {:ok, inventory, part} =
+      if File.exists?(new_dir_path) do
+        part =
+          Map.merge(part, %{
+            name: "#{part.name}-#{part.id}"
+          })
+
+        do_save_part(inventory, part)
+      else
+        {:ok, inventory, part}
+      end
+
+    :ok = File.rename(old_dir_path, new_dir_path)
+
+    toml_path = Path.join(new_dir_path, "part.toml")
+
+    part = Map.put(part, :category_id, new_category_id)
+
+    inventory = Map.merge(inventory, %{
+              part_index: Map.put(inventory.part_index, part.id, part)
+            })
+
+    {:ok, inventory, part}
   end
 
   def do_save_part(inventory, part) do

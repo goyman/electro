@@ -42,6 +42,7 @@
         class="flex flex-grow">
         <input type="search"
           name="q"
+          autocomplete="off"
           value="<%= @query %>"
           placeholder="search"
           class="text-black bg-gray-200 p-1 w-full">
@@ -95,6 +96,15 @@
         phx-click="open_folder"
         class="bg-gray-500 text-white font-bold py-1 px-2 ml-2 mr-2 text-center flex-grow">
         Open folder</button>
+    </div>
+    <div class="flex mb-4">
+      <%= f = form_for :part, "#", [phx_submit: :move_part, 
+                class: "flex flex-grow"] %>
+      <%= select f, :category_id, map_categories(@categories), 
+            value: @selected_part.category_id,
+            class: "flex-grow border border-blue-200 m-2 mr-0" %>
+      <%= submit "Change", class: "bg-blue-500 m-2 p-1 text-white font-bold text-center" %>
+      </form>
     </div>
     <ul class="flex flex-col text-xs">
       <%= for d <- p.documents do %>

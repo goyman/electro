@@ -51,6 +51,14 @@ defmodule ElectroWeb.PartLive.Index do
     {:noreply, assign(socket, selected_part: part, results: res)}
   end
 
+  def handle_event("move_part", %{"part" => %{"category_id" => cid}}, socket) do
+    part = socket.assigns.selected_part
+
+    {:ok, part} = Inventory.move_part(part, cid)
+
+    {:noreply, assign(socket, selected_part: part)}
+  end
+
   def handle_event("select_category", %{"id" => id}, socket) do
     cat = Inventory.category(id)
     res = Inventory.parts_in_category(id)
