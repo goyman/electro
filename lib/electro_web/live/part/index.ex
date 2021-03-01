@@ -100,7 +100,7 @@ defmodule ElectroWeb.PartLive.Index do
 
   def handle_event("print_label", _, socket) do
     part = socket.assigns.selected_part
-    Electro.Pdf.print_label(part)
+    Electro.Pdf.print_part_label(part)
     {:noreply, socket}
   end
 end

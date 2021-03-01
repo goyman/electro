@@ -1,0 +1,17 @@
+<div class="p-1 flex justify-center w-full">
+  <%= f = form_for(:label, "/l/",
+                   method: :post,
+                   class: "mt-16",
+                   id: "labelForm") %>
+    <div class="w-128 flex flex-col">
+      <%= textarea f, :text, class: "w-full bg-blue-100 resize-none p-4" %>
+      <div class="w-full flex items-center mt-8">
+      <%= checkbox f, :fit,
+          class: "appearance-none checked:bg-blue-500 p-3 border rounded border-gray-500 checked:border-transparent"
+      %>
+      <%= label f, :fit, "Fit text to label", class: "ml-4" %>
+      </div>
+      <%= submit "Print", class: "bg-blue-500 text-gray-100 font-bold w-full py-1 mt-8" %>
+    </div>
+  </form>
+</div>

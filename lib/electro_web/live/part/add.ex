@@ -91,7 +91,7 @@ defmodule ElectroWeb.PartLive.Add do
 
     {:ok, part} = Inventory.create_part(part)
 
-    Electro.Pdf.print_label(part)
+    Electro.Pdf.print_part_label(part)
 
     path = Routes.part_index_path(socket, :index)
     {:noreply, redirect(socket, to: path)}

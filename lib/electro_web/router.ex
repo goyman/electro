@@ -19,6 +19,8 @@ defmodule ElectroWeb.Router do
 
     get "/b", BomController, :index
     post "/b", BomController, :upload
+    get "/l", LabelController, :index
+    post "/l", LabelController, :print
     live "/", PartLive.Index, :index
     live "/p/:cat_id/add", PartLive.Add, :index
     live "/c/:cat_id/add", CategoryLive.Add, :index

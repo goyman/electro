@@ -14,7 +14,8 @@ module.exports = {
     }
   },
   variants: {
-    backgroundColor: ['responsive', 'hover', 'focus', 'disabled'],
+    backgroundColor: ['responsive', 'hover', 'focus', 'disabled', 'checked'],
+    borderColor: ['checked'],
     cursor: ['responsive', 'hover', 'focus', 'disabled'],
   }
 }

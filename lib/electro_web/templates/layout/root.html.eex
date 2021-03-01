@@ -28,6 +28,7 @@
           <% page = case Phoenix.Controller.current_path(@conn) do
                "/b/"<>_ -> :bom
                "/s/"<>_ -> :settings
+               "/l/"<>_ -> :label
                _ -> :parts
              end %>
           <li class="<%= if page == :parts do sel else unsel end %>">
@@ -35,6 +36,9 @@
           </li>
           <li class="<%= if page == :bom do sel else unsel end %>">
             <a href="/b/">BOMs</a>
+          </li>
+          <li class="<%= if page == :label do sel else unsel end %>">
+            <a href="/l/">Label</a>
           </li>
           <li class="<%= if page == :settings do sel else unsel end %>">
             <a href="/s/">Settings</a>
