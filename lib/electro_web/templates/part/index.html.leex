@@ -20,10 +20,12 @@
       <% else %>
       cursor-pointer
       <% end %>
-      <li class="py-1 px-2 <%= klasses %>"
-        style="margin-left: <%= indent %>em"
-        phx-click="select_category"
-        phx-value-id="<%= c.id %>"><%= c.name %></li>
+      <li class="flex items-stretch <%= klasses %>"
+        style="margin-left: <%= indent %>em">
+        <%= live_patch c.name,
+        to: Routes.part_index_path(ElectroWeb.Endpoint, :category, c.id),
+        class: "py-1 px-2 w-full" %>
+      </li>
       <% end %>
     </ul>
   </div>
@@ -98,9 +100,9 @@
         Open folder</button>
     </div>
     <div class="flex mb-4">
-      <%= f = form_for :part, "#", [phx_submit: :move_part, 
+      <%= f = form_for :part, "#", [phx_submit: :move_part,
                 class: "flex flex-grow"] %>
-      <%= select f, :category_id, map_categories(@categories), 
+      <%= select f, :category_id, map_categories(@categories),
             value: @selected_part.category_id,
             class: "flex-grow border border-blue-200 m-2 mr-0" %>
       <%= submit "Change", class: "bg-blue-500 m-2 p-1 text-white font-bold text-center" %>

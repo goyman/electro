@@ -22,6 +22,7 @@ defmodule ElectroWeb.Router do
     get "/l", LabelController, :index
     post "/l", LabelController, :print
     live "/", PartLive.Index, :index
+    live "/p/:cat_id", PartLive.Index, :category
     live "/p/:cat_id/add", PartLive.Add, :index
     live "/c/:cat_id/add", CategoryLive.Add, :index
     get "/x/reload", ExecController, :reload

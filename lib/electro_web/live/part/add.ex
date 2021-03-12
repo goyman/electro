@@ -93,7 +93,7 @@ defmodule ElectroWeb.PartLive.Add do
 
     Electro.Pdf.print_part_label(part)
 
-    path = Routes.part_index_path(socket, :index)
+    path = Routes.part_index_path(ElectroWeb.Endpoint, :category, socket.assigns.category.id)
     {:noreply, redirect(socket, to: path)}
   end
 

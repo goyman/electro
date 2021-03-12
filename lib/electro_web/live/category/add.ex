@@ -36,7 +36,7 @@ defmodule ElectroWeb.CategoryLive.Add do
         params["name"]
       )
 
-    path = Routes.part_index_path(socket, :index)
+    path = Routes.part_index_path(ElectroWeb.Endpoint, :category, cat.id)
     {:noreply, redirect(socket, to: path)}
   end
 end

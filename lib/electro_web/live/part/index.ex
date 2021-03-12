@@ -24,7 +24,14 @@ defmodule ElectroWeb.PartLive.Index do
     {:ok, assign(init(socket), categories: categories)}
   end
 
-  def handle_params(_, _url, socket) do
+  def handle_params(%{"cat_id" => id}, _url, socket) do
+    cat = Inventory.category(id)
+    res = Inventory.parts_in_category(id)
+
+    {:noreply, assign(socket, selected_category: cat, results: res, query: nil)}
+  end
+
+  def handle_params(params, _url, socket) do
     {:noreply, socket}
   end
 
@@ -57,13 +64,6 @@ defmodule ElectroWeb.PartLive.Index do
     {:ok, part} = Inventory.move_part(part, cid)
 
     {:noreply, assign(socket, selected_part: part)}
-  end
-
-  def handle_event("select_category", %{"id" => id}, socket) do
-    cat = Inventory.category(id)
-    res = Inventory.parts_in_category(id)
-
-    {:noreply, assign(socket, selected_category: cat, results: res, query: nil)}
   end
 
   def handle_event("search", %{"q" => q}, socket) do
