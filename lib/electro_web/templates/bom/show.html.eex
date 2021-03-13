@@ -4,7 +4,7 @@
     <td class="py-1 px-2 border-r align-top">
       <ul>
       <%= for c <- r.components do %>
-        <li><%= c.fields.ref %></li>
+        <li><%= c.ref %></li>
       <% end %>
       </ul>
     </td>

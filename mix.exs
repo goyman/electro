@@ -46,7 +46,8 @@ defmodule Electro.MixProject do
       {:httpoison, "~> 1.0"},
       {:pdf, "~> 0.4"},
       {:csv, "~> 2.4"},
-      {:temp, "~> 0.4"}
+      {:temp, "~> 0.4"},
+      {:nimble_parsec, "~> 1.1"}
     ]
   end
 

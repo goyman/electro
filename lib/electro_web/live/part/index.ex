@@ -93,7 +93,11 @@ defmodule ElectroWeb.PartLive.Index do
 
   def handle_event("add_category", _, socket) do
     path =
-      Routes.category_add_path(socket, :index, socket.assigns.selected_category.id)
+      Routes.category_add_path(
+        socket,
+        :index,
+        socket.assigns.selected_category.id
+      )
 
     {:noreply, redirect(socket, to: path)}
   end

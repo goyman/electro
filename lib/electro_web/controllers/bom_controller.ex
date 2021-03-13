@@ -12,19 +12,21 @@ defmodule ElectroWeb.BomController do
     groups =
       components
       |> Enum.group_by(fn cp ->
-        cp.fields["IPN"]
+        Map.get(cp, :ipn)
       end)
       |> Map.delete(nil)
       |> Enum.map(fn {ipn, els} ->
         ipn = String.to_integer(ipn)
         part = Inventory.part_with_id(ipn)
-        {ipn, %{
-          count: length(els),
-          location: part.location,
-          components: els,
-          name: part.name,
-          mpn: part.mpn
-        }}
+
+        {ipn,
+         %{
+           count: length(els),
+           location: part.location,
+           components: els,
+           name: part.name,
+           mpn: part.mpn
+         }}
       end)
       |> Enum.sort_by(fn {_, %{location: l}} ->
         l

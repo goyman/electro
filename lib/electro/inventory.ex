@@ -272,9 +272,10 @@ defmodule Electro.Inventory do
 
     part = Map.put(part, :category_id, new_category_id)
 
-    inventory = Map.merge(inventory, %{
-              part_index: Map.put(inventory.part_index, part.id, part)
-            })
+    inventory =
+      Map.merge(inventory, %{
+        part_index: Map.put(inventory.part_index, part.id, part)
+      })
 
     {:ok, inventory, part}
   end
