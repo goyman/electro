@@ -206,7 +206,7 @@ defmodule Electro.Inventory do
                    String.downcase(part.mpn),
                    String.downcase(query)
                  ) do
-                1
+                2
               else
                 0
               end
