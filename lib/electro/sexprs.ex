@@ -43,7 +43,8 @@ defmodule Electro.SExprs do
       repeat(
         choice([
           utf8_string([not: ?", not: ?\\], min: 1),
-          string(~S(\")) |> replace(~S("))
+          string(~S(\")) |> replace(~S(")),
+          string(~S(\n)) |> replace(~S( ))
         ])
       )
     )

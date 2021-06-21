@@ -18,6 +18,13 @@ defmodule ElectroWeb.BomController do
       |> Enum.map(fn {ipn, els} ->
         ipn = String.to_integer(ipn)
         part = Inventory.part_with_id(ipn)
+        {ipn, part, els}
+      end)
+      |> Enum.reject(fn {ipn, part, els} ->
+        is_nil(ipn) || is_nil(part) || is_nil(els)
+      end)
+      |> Enum.map(fn {ipn, part, els} ->
+        els = Enum.uniq(els)
 
         {ipn,
          %{

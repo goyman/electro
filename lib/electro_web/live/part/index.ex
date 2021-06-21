@@ -107,4 +107,12 @@ defmodule ElectroWeb.PartLive.Index do
     Electro.Pdf.print_part_label(part)
     {:noreply, socket}
   end
+
+  def handle_event("open_folder", _, socket) do
+    part = socket.assigns.selected_part
+    cat = Inventory.category(part.category_id)
+    res = Inventory.parts_in_category(part.category_id)
+
+    {:noreply, assign(socket, selected_category: cat, results: res, query: nil)}
+  end
 end

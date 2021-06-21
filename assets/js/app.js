@@ -24,7 +24,7 @@ import 'nprogress/nprogress.css'
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 // We import it last to allow overrides
-import '../css/app.scss'
+import '../css/app.css'
 
 const Hooks = {}
 
