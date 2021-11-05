@@ -7,6 +7,7 @@ PATH := ./node_modules/.bin:$(PATH)
 build: export NODE_ENV=production
 build: node_modules
 	webpack --mode production
+	purgecss -c purgecss.config.js -o ../priv/static/css/
 
 .PHONY: watch
 

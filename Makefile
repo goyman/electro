@@ -26,3 +26,10 @@ assets:
 
 assets-watch:
 	cd assets && make watch
+
+.PHONY: release
+
+release: export MIX_ENV=prod
+release: assets
+	mix phx.digest
+	mix release --overwrite
