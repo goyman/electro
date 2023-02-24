@@ -7,7 +7,7 @@ defmodule ElectroWeb.Router do
     plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_root_layout, {ElectroWeb.LayoutView, :root}
+    plug :put_root_layout, {ElectroWeb.Layouts, :root}
   end
 
   pipeline :api do

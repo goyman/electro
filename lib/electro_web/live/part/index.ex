@@ -3,12 +3,10 @@ defmodule ElectroWeb.PartLive.Index do
     container: {:div, class: "max-h-full flex w-full max-w-full h-full"}
 
   alias ElectroWeb.Router.Helpers, as: Routes
+  use Phoenix.HTML
 
-  alias ElectroWeb.PartView
   alias Electro.Inventory
   alias Electro.Octopart
-
-  def render(assigns), do: PartView.render("index.html", assigns)
 
   def init(socket) do
     assign(socket,
@@ -84,6 +82,14 @@ defmodule ElectroWeb.PartLive.Index do
     {:noreply, socket}
   end
 
+  def handle_event("open_folder", _, socket) do
+    # TODO allow configuration of that command
+    part = socket.assigns.selected_part
+    path = Path.dirname(part.path)
+    System.cmd("xdg-open", [path])
+    {:noreply, socket}
+  end
+
   def handle_event("add_part", _, socket) do
     path =
       Routes.part_add_path(socket, :index, socket.assigns.selected_category.id)
@@ -108,11 +114,21 @@ defmodule ElectroWeb.PartLive.Index do
     {:noreply, socket}
   end
 
-  def handle_event("open_folder", _, socket) do
+  def handle_event("open_category", _, socket) do
     part = socket.assigns.selected_part
     cat = Inventory.category(part.category_id)
     res = Inventory.parts_in_category(part.category_id)
 
     {:noreply, assign(socket, selected_category: cat, results: res, query: nil)}
+  end
+
+
+  def map_categories(categories) do
+    categories
+    |> Enum.map(fn c ->
+      name = String.duplicate(" ", c.depth) <> " " <> c.name
+
+      [key: name, value: c.id]
+    end)
   end
 end

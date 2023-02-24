@@ -19,7 +19,9 @@ defmodule ElectroWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: ElectroWeb
+      use Phoenix.Controller,
+        formats: [:html, :json],
+        layouts: [html: ElectroWeb.Layouts]
 
       import Plug.Conn
       alias ElectroWeb.Router.Helpers, as: Routes
@@ -27,20 +29,16 @@ defmodule ElectroWeb do
     end
   end
 
-  def view do
+  def html do
     quote do
-      use Phoenix.View,
-        root: "lib/electro_web/templates",
-        namespace: ElectroWeb
+      use Phoenix.Component
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
-        only: [get_flash: 1, get_flash: 2, view_module: 1]
-
-      import Phoenix.LiveView.Helpers
+        only: [get_csrf_token: 0, view_module: 1, view_template: 1]
 
       # Include shared imports and aliases for views
-      unquote(view_helpers())
+      unquote(html_helpers())
     end
   end
 
@@ -60,15 +58,11 @@ defmodule ElectroWeb do
     end
   end
 
-  defp view_helpers do
+  defp html_helpers do
     quote do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      # Import basic rendering functionality (render, render_layout, etc)
-      import Phoenix.View
-
-      import ElectroWeb.ErrorHelpers
       alias ElectroWeb.Router.Helpers, as: Routes
     end
   end

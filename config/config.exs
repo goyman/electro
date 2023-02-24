@@ -28,6 +28,35 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.0",
+  default: [
+    args: ~w(js/app.js --bundle
+       --target=es2017 --outdir=../priv/static/assets
+       --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+config :tailwind,
+  version: "3.2.4",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
+config :phoenix_copy,
+  default: [
+    debounce: 100,
+    source: Path.expand("../assets/vendor", __DIR__),
+    destination: Path.expand("../priv/static/assets/vendor/", __DIR__)
+  ]
+
 inventory_path =
   System.get_env("INVENTORY_PATH") ||
     raise """

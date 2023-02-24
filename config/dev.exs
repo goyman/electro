@@ -12,9 +12,11 @@ config :electro, ElectroWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    make: [
-      "assets-watch"
-    ]
+    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
+    esbuild:
+      {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]},
+    asset_copy: {Phoenix.Copy, :watch, [:default]}
   ]
 
 # ## SSL Support

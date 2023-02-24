@@ -3,7 +3,7 @@ defmodule ElectroWeb.LabelController do
   alias Electro.Inventory
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    render(conn, :index)
   end
 
   def print(conn, %{"label" => label}) do
@@ -16,6 +16,6 @@ defmodule ElectroWeb.LabelController do
       end
 
     Electro.Pdf.print_text_label(text, opts)
-    render(conn, "index.html")
+    render(conn, :index)
   end
 end

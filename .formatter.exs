@@ -1,5 +1,10 @@
 [
-  import_deps: [:phoenix],
-  inputs: ["*.{ex,exs}", "{config,lib,test}/**/*.{ex,exs}"],
-  line_length: 80
+  plugins: [Phoenix.LiveView.HTMLFormatter],
+  line_length: 80,
+  inputs: [
+    "*.{ex,exs}",
+    "priv/repo/**/*.exs",
+    "priv/*/seeds.exs",
+    "{config,lib,test}/**/*.{ex,exs,heex}"
+  ]
 ]

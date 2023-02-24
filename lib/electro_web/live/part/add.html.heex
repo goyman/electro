@@ -11,10 +11,10 @@
     </div>
 
     <%= if @page == :search do %>
-    <%= render "search.html", assigns %>
+      <.search_form results={@results} query={@query} selected_idx={@selected_idx} />
     <% end %>
     <%= if @page == :form do %>
-    <%= render "form.html", assigns %>
+      <.add_form new_part={@new_part} />
     <% end %>
   </div>
 </div>

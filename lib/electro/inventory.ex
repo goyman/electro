@@ -305,7 +305,7 @@ defmodule Electro.Inventory do
       end
       |> do_download_documents()
 
-    toml = Phoenix.View.render(ElectroWeb.PartView, "part.toml", part: part)
+    toml = ElectroWeb.PartTOML.part(%{part: part})
 
     inventory =
       if is_update do
@@ -341,6 +341,7 @@ defmodule Electro.Inventory do
         end
       end
 
+    part = Map.get(inventory.part_index, part.id)
     {:ok, inventory, part}
   end
 
@@ -465,7 +466,8 @@ defmodule Electro.Inventory do
            categories: categories,
            category_index: category_index,
            parts: parts,
-           part_index: part_index
+           part_index: part_index,
+           base_depth: base_depth
          } = ac,
          path
        ) do
@@ -501,6 +503,7 @@ defmodule Electro.Inventory do
       |> Map.merge(%{
         path: path,
         category_id: Path.join(category) |> hash(),
+        category_path: Enum.drop(category, base_depth),
         documents: documents
       })
 

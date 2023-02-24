@@ -7,7 +7,7 @@ defmodule Electro.MixProject do
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,19 +33,21 @@ defmodule Electro.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.0"},
-      {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
+      {:phoenix, "~> 1.7.0-rc.3", override: true},
+      {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_reload, "~> 1.4", only: :dev},
+      {:phoenix_live_view, "~> 0.18.0"},
       {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
+      {:telemetry_poller, "~> 1.0"},
+      {:esbuild, "~> 0.3", only: :dev},
+      {:tailwind, "~> 0.1.6", only: :dev},
+      {:phoenix_copy, "~> 0.1.2", only: :dev},
       {:jason, "~> 1.0"},
       {:fuzzy_compare, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:toml, "~> 0.6.1"},
-      {:httpoison, "~> 1.0"},
+      {:toml, "~> 0.7"},
+      {:httpoison, "~> 2.0"},
       {:pdf, "~> 0.4"},
-      {:csv, "~> 2.4"},
       {:temp, "~> 0.4"},
       {:nimble_parsec, "~> 1.1"}
     ]

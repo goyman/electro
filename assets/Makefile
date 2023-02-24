@@ -1,28 +1,19 @@
-SHELL := /bin/sh
 PATH := ./node_modules/.bin:$(PATH)
-
-
-.PHONY: build
-
-build: export NODE_ENV=production
-build: node_modules
-	webpack --mode production
-	purgecss -c purgecss.config.js -o ../priv/static/css/
-
-.PHONY: watch
-
-watch: node_modules
-	webpack --color --mode development --watch
+JS_SOURCE:=$(shell find js -name \*.js)
+JS_SOURCE+=tailwind.config.js
 
 .PHONY: clean
 
 clean:
+	rm -fr ../priv/static/assets
 	rm -fr node_modules
-	rm -fr ../priv/static/
-	rm -fr npm-debug.log*
 
-yarn.lock:
-	yarn
+deps: node_modules
 
-node_modules: yarn.lock package.json
-	yarn
+node_modules:
+	npm i
+
+.PHONY: format
+
+format: deps
+	-eslint $(JS_SOURCE) --fix

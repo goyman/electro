@@ -2,11 +2,9 @@ defmodule ElectroWeb.CategoryLive.Add do
   use Phoenix.LiveView,
     container: {:div, class: "max-h-full flex w-full max-w-full h-full"}
 
-  alias ElectroWeb.CategoryView
   alias Electro.Inventory
   alias ElectroWeb.Router.Helpers, as: Routes
-
-  def render(assigns), do: CategoryView.render("add.html", assigns)
+  use Phoenix.HTML
 
   def init(socket) do
     assign(socket,

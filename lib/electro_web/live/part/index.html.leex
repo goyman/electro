@@ -95,9 +95,9 @@
         class="bg-gray-500 text-white font-bold py-1 px-2 ml-2 text-center flex-grow">
         Print label</button>
       <button
-        phx-click="open_folder"
+        phx-click="open_category"
         class="bg-gray-500 text-white font-bold py-1 px-2 ml-2 mr-2 text-center flex-grow">
-        Open folder</button>
+        Open category</button>
     </div>
     <div class="flex mb-4">
       <%= f = form_for :part, "#", [phx_submit: :move_part,
@@ -115,6 +115,11 @@
         phx-value-path="<%= d.path |> Base.encode64() %>"><%= d.name %></li>
       <% end %>
     </ul>
+
+    <button
+      phx-click="open_folder"
+      class="bg-gray-500 text-white font-bold py-1 px-2 ml-2 mr-2 text-center">
+      Open folder</button>
     <% else %>
     <div class="flex self-center flex-grow">
       <p class="font-bold self-center">No part selected</p>

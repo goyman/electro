@@ -2,12 +2,11 @@ defmodule ElectroWeb.PartLive.Add do
   use Phoenix.LiveView,
     container: {:div, class: "max-h-full flex w-full max-w-full h-full"}
 
-  alias ElectroWeb.PartView
   alias Electro.Inventory
   alias Electro.Octopart
   alias ElectroWeb.Router.Helpers, as: Routes
-
-  def render(assigns), do: PartView.render("add.html", assigns)
+  use Phoenix.HTML
+  import ElectroWeb.PartLive.Components
 
   def init(socket) do
     assign(socket,
