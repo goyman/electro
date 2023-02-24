@@ -367,6 +367,7 @@ defmodule Electro.Inventory do
                   else
                     _ -> Path.basename(url)
                   end
+                  |> sanitize_filename()
 
                 path = Path.join(dir, filename)
                 File.write!(path, body)
@@ -546,5 +547,14 @@ defmodule Electro.Inventory do
 
   def escape_path(str) do
     String.replace(str, ~r([/\\]), "-")
+  end
+
+  defp sanitize_filename(filename) do
+    String.split(filename, "?")
+    |> case do
+      [f] -> f
+      [f | _] -> f
+    end
+    |> String.slice(0..100)
   end
 end
