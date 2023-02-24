@@ -19,13 +19,9 @@ clean:
 
 .PHONY: assets
 
+assets: export MIX_ENV=dev
 assets:
-	cd assets && make build
-
-.PHONY: assets-watch
-
-assets-watch:
-	cd assets && make watch
+	mix assets.deploy
 
 .PHONY: release
 

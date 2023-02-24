@@ -17,11 +17,6 @@ import { LiveSocket } from 'phoenix_live_view'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-// We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
-// its own CSS file.
-// We import it last to allow overrides
-import '../css/app.css'
 
 const Hooks = {}
 
