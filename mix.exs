@@ -43,7 +43,7 @@ defmodule Electro.MixProject do
       {:tailwind, "~> 0.1.6", only: :dev},
       {:phoenix_copy, "~> 0.1.2", only: :dev},
       {:jason, "~> 1.0"},
-      {:fuzzy_compare, "~> 1.0"},
+      {:fuzzy_compare, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
       {:toml, "~> 0.7"},
       {:httpoison, "~> 2.0"},
