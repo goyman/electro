@@ -1,12 +1,12 @@
 defmodule Electro.Octopart do
   require Logger
 
-  @api_url "https://octopart.com/api/v4/endpoint"
+  @api_url "https://api.nexar.com/graphql"
 
   def api_query(q, limit) do
     """
-    query {
-      search(q: "#{q}", limit: #{limit}) {
+    {
+      supSearch(q: "#{q}", limit: #{limit}) {
         results {
           part {
             mpn
@@ -16,12 +16,12 @@ defmodule Electro.Octopart do
             descriptions {
               text
             }
-            best_datasheet {
+            bestDatasheet {
                 url
                 name
             }
             specs {
-              display_value
+              displayValue
               attribute {
                 name
               }
@@ -51,9 +51,11 @@ defmodule Electro.Octopart do
       ]
 
       HTTPoison.post(@api_url, query, headers)
+      |> dbg
       |> case do
         {:ok, %{status_code: 200, body: body}} ->
           body = Jason.decode!(body)
+            |> dbg
           {:ok, map_results(body)}
 
         {:ok, res} ->
@@ -69,7 +71,7 @@ defmodule Electro.Octopart do
     end
   end
 
-  defp map_results(%{"data" => %{"search" => %{"results" => results}}})
+  defp map_results(%{"data" => %{"supSearch" => %{"results" => results}}})
        when is_list(results) do
     results
     |> Enum.map(fn %{"part" => part} ->
@@ -85,13 +87,13 @@ defmodule Electro.Octopart do
           part["specs"]
           |> Enum.map(fn %{
                            "attribute" => %{"name" => key},
-                           "display_value" => value
+                           "displayValue" => value
                          } ->
             {key, value}
           end)
           |> Map.new(),
         documents:
-          [part["best_datasheet"]]
+          [part["bestDatasheet"]]
           |> Enum.reject(&is_nil/1)
           |> Enum.map(fn %{"name" => name, "url" => url} ->
             %{name: name, url: url}
